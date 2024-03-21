@@ -60,8 +60,11 @@ def run(job, optuna_trial=None):
     #     "--model_outdir", str(model_outdir_job_id),
     # ])
     
-    subprocess.run(["bash", subprocess_bashscript, str(train_ml_data_dir),str(val_ml_data_dir), str(model_outdir_job_id)], 
-                   capture_output=True, text=True, check=True)
+    subprocess.run(["bash", subprocess_bashscript,
+                    str(train_ml_data_dir),
+                    str(val_ml_data_dir),
+                    str(model_outdir_job_id)], 
+                    capture_output=True, text=True, check=True)
     
     f = open(model_outdir + 'val_scores.json')
     val_scores = json.load(f)
