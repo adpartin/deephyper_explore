@@ -1,7 +1,6 @@
 """ Romain Egele
 mpirun -np 5 python hpo_example_2.py
 """
-
 import time
 
 import numpy as np

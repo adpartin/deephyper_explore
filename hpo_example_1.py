@@ -1,13 +1,13 @@
 """ Romain Egele
-mpirun -np 8 python hpo_example_1.py
+mpirun -np 5 python hpo_example_1.py
 """
-
 import time
 
 from deephyper.evaluator import Evaluator
 from deephyper.search.hps import CBO
 from deephyper.problem import HpProblem
 
+# Definition of the parameter space to optimize
 problem = HpProblem()
 problem.add_hyperparameter((0.0, 10.0), "x_float")  # continuous hyperparameter
 problem.add_hyperparameter((0, 10), "x_int")  # discrete hyperparameter
@@ -23,7 +23,7 @@ def run(job):
 if __name__ == "__main__":
     with Evaluator.create(run, method="mpicomm") as evaluator:
 
-        if evaluator is not None:  # When evaluator is None??
+        if evaluator is not None:
             print(problem)
 
             search = CBO(problem, evaluator)

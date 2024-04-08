@@ -52,7 +52,7 @@ def run(job, optuna_trial=None):
     #     remap_hyperparameters(config)
     #     params.update(config)
 
-    model_outdir_job_id = model_outdir + f"/{job_id}"
+    model_outdir_job_id = model_outdir + f"/{job.id}"
 
     # val_scores = main_train_grapdrp([
     #     "--train_ml_data_dir", str(train_ml_data_dir),
@@ -60,15 +60,22 @@ def run(job, optuna_trial=None):
     #     "--model_outdir", str(model_outdir_job_id),
     # ])
     
-    subprocess.run(["bash", subprocess_bashscript,
-                    str(train_ml_data_dir),
-                    str(val_ml_data_dir),
-                    str(model_outdir_job_id)], 
-                    capture_output=True, text=True, check=True)
+    result = subprocess.run(
+        [
+            "bash", subprocess_bashscript,
+            str(train_ml_data_dir),
+            str(val_ml_data_dir),
+            str(model_outdir_job_id)
+        ], 
+        capture_output=True, text=True, check=True
+    )
+    # print(result.stdout)
+    # print(result.stderr)
     
-    f = open(model_outdir + 'val_scores.json')
+    f = open(model_outdir + "/val_scores.json")
     val_scores = json.load(f)
     objective = -val_scores["val_loss"]
+    # print("objective:", objective)
 
     # Checkpoint the model weights
     with open(f"{log_dir}/model_{job.id}.pkl", "w") as f:
