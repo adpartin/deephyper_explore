@@ -13,11 +13,13 @@
 
 set -xe
 
+# Load modules available on the current system
 module load llvm
 module load conda/2023-10-04
 
-conda create -p dh --clone base -y
-conda activate dh/
+# Copy the base conda environment
+conda create -p dhenv --clone base -y
+conda activate dhenv/
 pip install --upgrade pip
 
 # Install Spack
@@ -33,7 +35,7 @@ spack repo add deephyper-spack-packages
 spack add redisjson
 spack install
 
-# Clone DeepHyper (master)
+# Clone DeepHyper Python package (master)
 git clone -b master git@github.com:deephyper/deephyper.git
 
 # Install DeepHyper with MPI and Redis backends

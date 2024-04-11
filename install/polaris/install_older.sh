@@ -22,8 +22,10 @@ conda create -p dhenv --clone base -y
 conda activate dhenv/
 pip install --upgrade pip
 
-# Install the DeepHyper's Python package
+# Clone DeepHyper Python package (develop)
 git clone -b develop git@github.com:deephyper/deephyper.git
+
+# Install DeepHyper with MPI backend
 pip install -e "deephyper/[hps,mpi]"
 
 # For mpi4py
